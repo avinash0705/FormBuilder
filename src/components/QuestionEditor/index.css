@@ -1,0 +1,180 @@
+.question-editor {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+
+    .input-container{
+        margin: 0;
+    }
+
+    .max-length{
+        width: 50%;
+    }
+}
+
+.question-header {
+    .question-label{
+        margin: 0 20px;
+        line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+
+/* Meta Data Styling */
+.question-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Floating Label Styling for Inputs */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    color: #888;
+    pointer-events: none;
+    background: white;
+    padding: 0 5px;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 12px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.input-container input:focus + .floating-label,
+.input-container input:not(:placeholder-shown) + .floating-label {
+    top: 5px;
+    font-size: 12px;
+    color: #007bff;
+}
+
+/* Checkboxes */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.checkbox input {
+    width: 16px;
+    height: 16px;
+    accent-color: #007bff;
+}
+
+/* Number Fields Layout */
+.number-fields {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 500px) {
+    .question-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .number-fields {
+        flex-direction: column;
+    }
+}
+
+
+
+.options-section{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.add-option-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-option-container input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-option-btn {
+    position: absolute;
+    right: 7%;
+    color: #007bff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.options-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.option-chip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #007bff;
+    color: white;
+    padding: 8px 20px 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.delete-option {
+    background: transparent;
+    border: none;
+    color: white;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.error-border {
+    input {
+        border: 1px solid red !important;
+    }
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+

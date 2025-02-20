@@ -1,0 +1,36 @@
+.select-container {
+    position: relative;
+    width: 100%;
+}
+
+.floating-label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    color: #888;
+    pointer-events: none;
+    background: white;
+    padding: 0 5px;
+}
+
+.select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    appearance: none;
+}
+.select-container.focused{
+    border-color: #007bff;
+}
+
+.select-container.focused .floating-label {
+    top: 1px;
+    font-size: 10px;
+    color: #007bff;
+}

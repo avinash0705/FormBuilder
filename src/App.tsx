@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, NavLink } from "react-router-dom";
+import FormBuilder from "./components/FormBuilder";
+import FormRenderer from "./components/FormRenderer";
+import "./App.css"; // Import CSS styles
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+    return (
+        <Router>
+            <div className="app-container">
+                <nav className="navbar">
+                    <NavLink to="/builder" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                        Form Builder
+                    </NavLink>
+                    <NavLink to="/renderer" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                        Form Renderer
+                    </NavLink>
+                </nav>
+                <div className="content">
+                    <Routes>
+                        <Route path="/builder" element={<FormBuilder />} />
+                        <Route path="/renderer" element={<FormRenderer />} />
+                        <Route path="/" element={<Navigate to="/builder" />} />
+                    </Routes>
+                </div>
+            </div>
+        </Router>
+    );
+};
 
 export default App;

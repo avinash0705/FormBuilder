@@ -1,0 +1,47 @@
+.input-container {
+    position: relative;
+    width: 100%;
+    margin: 12px 0;
+}
+
+
+.floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 5px;
+    transition: all 0.3s ease-in-out;
+    color: #888;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.error-border {
+    .floating-label {
+        top: 36%;
+        transform: translateY(-50%);
+    }
+}
+
+.input-container input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.input-container input:focus {
+    border-color: #007bff;
+}
+
+.input-container.focused .floating-label {
+    top: 1px;
+    font-size: 10px;
+    color: #007bff;
+}
