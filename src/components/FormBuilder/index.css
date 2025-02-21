@@ -2,6 +2,23 @@
     padding: 20px;
     max-width: 600px;
     margin: auto;
+    .input-container  {
+        margin: 0;
+    }
+
+    .header{
+        position: sticky;
+        top: 61px;
+        z-index: 1;
+        padding-top: 20px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        .saving-indicator{
+            top: 34px;
+        }
+    }
 }
 
 .question-number {
@@ -16,7 +33,17 @@
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
+    margin: 10px 0;
 }
+.reset-btn{
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+
 
 .questions-list {
     margin-top: 20px;
@@ -34,8 +61,8 @@
 
 /* Error styling */
 .error {
-    .question-number{
-        color: red
+    .question-number {
+        color: red;
     }
 }
 
@@ -61,6 +88,7 @@
 .toggle-arrow {
     font-size: 20px;
     width: 20px;
+    color: #a0a0a0;
 }
 
 .action-btn {
@@ -74,13 +102,68 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+    .form-builder-container {
+        padding: 15px;
+        max-width: 100%;
+
+    }
+
+    .question-card {
+        padding: 10px;
+    }
+
+    .add-btn {
+        text-align: center;
+        &.disabled{
+            opacity: .3;
+        }
+    }
+
+
+    .question-header {
+        align-items: flex-start;
+    }
+
+    .toggle-arrow {
+        font-size: 18px;
+    }
+}
+
 @media (max-width: 500px) {
+    .form-builder-container{
+        .header{
+            flex-wrap: wrap;
+            padding-bottom: 30px;
+            .saving-indicator{
+                top: 83%;
+                left: 49%;
+                transform: translate(-40px, 0);
+            }
+        }
+        .add-btn {
+            width: 100%;
+            margin: 0;
+        }
+        .reset-btn {
+            width: 100%;
+            margin: 0;
+        }
+    }
     .question-card {
         padding: 8px;
     }
 
     .add-btn {
-        width: 100%;
         text-align: center;
     }
+}
+
+@media (max-width: 430px) {
+    .form-builder-container{
+        .header {
+            top: 82px;
+        }
+    }
+
 }

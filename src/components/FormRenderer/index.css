@@ -1,65 +1,108 @@
 .form-container {
     max-width: 600px;
+    width: 90%;
     margin: 20px auto;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 h2 {
     text-align: center;
-    color: #333;
+    color: #222;
     margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "Arial", sans-serif;
+}
+
+.no-questions {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .form-field {
     margin-bottom: 16px;
-    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-field label {
-    display: block;
-    font-size: 14px;
+/* Improved Label Style */
+.field-label {
+    font-size: 16px;
     font-weight: 600;
-    margin-bottom: 5px;
-    color: #444;
+    margin-bottom: 6px;
+    color: #333;
+    font-family: "Arial", sans-serif;
 }
 
+/* Red Asterisk for Required Fields */
+.required-star {
+    color: red;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+/* Input and Select Styling */
 .form-field input,
 .form-field select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
+    font-family: "Arial", sans-serif;
     border: 1px solid #ccc;
     border-radius: 6px;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-field input:focus,
 .form-field select:focus {
     border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     outline: none;
 }
 
 .error-text {
     color: #d9534f;
     font-size: 12px;
+    font-weight: 600;
     margin-top: 5px;
 }
 
+/* Button Styling */
 .submit-button {
+    margin: 10px 0;
     width: 100%;
     padding: 12px;
     background: #007bff;
     color: white;
     font-size: 16px;
+    font-weight: 700;
+    font-family: "Arial", sans-serif;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .submit-button:hover {
     background: #0056b3;
+    transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .submit-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }

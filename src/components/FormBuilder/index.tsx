@@ -1,41 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./index.css";
 import { getFormData, saveFormData } from "../../services/formService";
 import { Question } from "../../types/formTypes";
 import { validateForm } from "../../validation/formValidation";
 import QuestionEditor from "../QuestionEditor";
+import Spinner from "../common/Spinner";
+import { debounce } from "../../util";
 
 const FormBuilder: React.FC = () => {
-    const [questions, setQuestions] = useState<Question[]>([]);
+    const [questions, setQuestions] = useState<Question[]>(() => getFormData());
     const [expandedId, setExpandedId] = useState<number | null>(null);
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [errors, setErrors] = useState<{ [key: number]: { [field: string]: string } }>({}); // Track errors per question field
+    const [errors, setErrors] = useState<{ [key: number]: { [field: string]: string } }>({});
+    const [isSaving, setIsSaving] = useState(false);
 
-    useEffect(() => {
-        setQuestions(getFormData());
-    }, []);
-
+    const errorPresent = useCallback((): boolean => {
+        return Object.keys(errors).length > 0;
+    },[errors]);
 
     useEffect(() => {
         const validationErrors = validateForm(questions);
         const errorMap: { [key: number]: { [field: string]: string } } = {};
-    
+
         validationErrors.forEach((err) => {
             if (!errorMap[err.id]) {
-                errorMap[err.id] = {}; 
+                errorMap[err.id] = {};
             }
             errorMap[err.id][err.field] = err.message;
         });
-    
+
         setErrors(errorMap);
-    
+
         if (Object.keys(errorMap).length === 0) {
-            saveFormData(questions);
+            setIsSaving(true);
+            setTimeout(() => {
+                saveFormData(questions);
+                setIsSaving(false);
+            }, 1000);
         }
     }, [questions]);
-    
 
     const addQuestion = () => {
+        if(errorPresent())return;
         const newQuestion: Question = {
             id: Date.now(),
             type: "Text",
@@ -43,53 +48,37 @@ const FormBuilder: React.FC = () => {
             required: false,
             hidden: false,
         };
-        setQuestions([...questions, newQuestion]);
+        setQuestions((prev) => [...prev, newQuestion]);
         setExpandedId(newQuestion.id);
-        setEditingId(newQuestion.id);
-    };
-
-    const toggleExpand = (id: number) => {
-        setExpandedId(expandedId === id ? null : id);
     };
 
     const updateQuestion = (updated: Question) => {
-        setQuestions(questions.map((q) => (q.id === updated.id ? updated : q)));
-
-        // Clear only the specific field error when it is fixed
-        setErrors((prev) => {
-            if (!prev[updated.id]) return prev; // No errors to clear
-
-            const newErrors = { ...prev };
-            let hasRemainingErrors = false;
-
-            Object.keys(newErrors[updated.id]).forEach((field) => {
-                if (updated[field as keyof Question] !== "" && updated[field as keyof Question] !== undefined) {
-                    delete newErrors[updated.id][field];
-                } else {
-                    hasRemainingErrors = true;
-                }
-            });
-
-            if (!hasRemainingErrors) {
-                delete newErrors[updated.id];
-            }
-
-            return newErrors;
-        });
+        setQuestions((prev) =>
+            prev.map((q) => (q.id === updated.id ? updated : q))
+        );
     };
 
     const deleteQuestion = (id: number) => {
-        setQuestions(questions.filter((q) => q.id !== id));
-        setErrors((prev) => {
-            const newErrors = { ...prev };
-            delete newErrors[id];
-            return newErrors;
-        });
+        setQuestions((prev) => prev.filter((q) => q.id !== id));
     };
+
+    const resetForm = () => {
+        setQuestions([]);
+        saveFormData([]);
+    }
+
+    const debouncedResetForm = debounce(resetForm, 500);
+
 
     return (
         <div className="form-builder-container">
-            <button className="add-btn" onClick={addQuestion}>+ Add Question</button>
+            <div className="header">
+                <button className={`add-btn ${errorPresent() ? "disabled": ""}`} onClick={addQuestion}>+ Add Question</button>
+                <button className="reset-btn" onClick={debouncedResetForm}>Reset Form</button>
+                {isSaving && (
+                    <Spinner />
+                )}
+            </div>
             <div className="questions-list">
                 {questions.map((q, index) => {
                     const isExpanded = expandedId === q.id;
@@ -97,23 +86,21 @@ const FormBuilder: React.FC = () => {
 
                     return (
                         <div key={q.id} className={`question-card ${isExpanded ? "expanded" : ""} ${hasError ? "error" : ""}`}>
-                            <div className="question-header" onClick={() => toggleExpand(q.id)}>
+                            <div className="question-header" onClick={() => setExpandedId(isExpanded ? null : q.id)}>
                                 <span className="question-number">Q{index + 1}</span>
                                 <span title={q.label || ""} className="question-label">{q.label || "New Question"}</span>
                                 <span className="action-btn">
                                     <i className="fa-solid fa-trash delete-btn" onClick={() => deleteQuestion(q.id)}></i>
-                                    <span className="toggle-arrow">{isExpanded ? "-" : "+"}</span>
+                                    {isExpanded ? <i className="fa-solid fa-chevron-up"></i> : <i className="fa-solid fa-chevron-down"></i> }
+                                    {/* <span className="toggle-arrow">{isExpanded ? "-" : "+"}</span> */}
                                 </span>
                             </div>
-
                             {isExpanded && (
-                                <>
-                                    <QuestionEditor
-                                        question={q}
-                                        updateQuestion={updateQuestion}
-                                        errors={errors[q.id] || {}} // Pass only errors for the current question
-                                    />
-                                </>
+                                <QuestionEditor
+                                    question={q}
+                                    updateQuestion={updateQuestion}
+                                    errors={errors[q.id] || {}}
+                                />
                             )}
                         </div>
                     );

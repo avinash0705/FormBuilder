@@ -11,6 +11,8 @@ interface InputProps {
     maxLength?: number;
     placeholder?: string;
     errMsg?: string;
+    min?: number;
+    max?: number;
 }
 
 const Input: React.FC<InputProps> = ({ className, label, type = "text", value, onChange, maxLength, placeholder, onKeyDown, errMsg }) => {

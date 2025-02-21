@@ -6,13 +6,15 @@ interface SelectProps {
     options: string[];
     value?: string | number;
     onChange: (value: string) => void;
+    errMsg?: string;
+    className?: string
 }
 
-const Select: React.FC<SelectProps> = ({ label, options, value, onChange }) => {
+const Select: React.FC<SelectProps> = ({ label, options, value, onChange, errMsg, className }) => {
     const [focused, setFocused] = useState(false);
 
     return (
-        <div className={`select-container ${focused || value ? "focused" : ""}`}>
+        <div className={`select-container ${focused || value ? "focused" : ""} ${className ? className : ""}`}>
             <label className="floating-label">{label}</label>
             <select
                 value={value || ""}
@@ -21,7 +23,7 @@ const Select: React.FC<SelectProps> = ({ label, options, value, onChange }) => {
                 onBlur={() => setFocused(false)}
             >
                 <option value="" disabled>
-                    Select an option
+                    
                 </option>
                 {options.map((opt, index) => (
                     <option key={index} value={opt}>
@@ -29,6 +31,7 @@ const Select: React.FC<SelectProps> = ({ label, options, value, onChange }) => {
                     </option>
                 ))}
             </select>
+            {errMsg && <span className="error-message">{errMsg}</span>}
         </div>
     );
 };

@@ -4,6 +4,9 @@
     justify-content: center;
     background: #007bff;
     padding: 12px;
+    z-index: 1;
+    position: sticky;
+    top: 0;
 }
 
 /* Default Nav Link */
@@ -16,6 +19,7 @@
     padding: 8px 16px;
     border-radius: 6px;
     transition: background 0.3s;
+    text-align: center;
 }
 
 /* Hover Effect */
