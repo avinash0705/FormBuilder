@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/avinash0705/FormBuilder.git/static/css/main.ddca7420.css",
+    "main.js": "/avinash0705/FormBuilder.git/static/js/main.bcb4e45f.js",
+    "index.html": "/avinash0705/FormBuilder.git/index.html",
+    "main.ddca7420.css.map": "/avinash0705/FormBuilder.git/static/css/main.ddca7420.css.map",
+    "main.bcb4e45f.js.map": "/avinash0705/FormBuilder.git/static/js/main.bcb4e45f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ddca7420.css",
+    "static/js/main.bcb4e45f.js"
+  ]
+}
